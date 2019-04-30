@@ -1,0 +1,90 @@
+//Usually you will require both swing and awt packages
+// even if you are working with just swings.
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+class Swing4AL {
+	  private JFrame mainFrame;
+	   private JLabel headerLabel;
+	   private JLabel statusLabel;
+	   private JPanel controlPanel;
+	   private JMenuBar menuBar;
+	  // private JMenu menu;
+	   private JTextArea textArea;
+	   private JTextField textField;
+	   
+	public Swing4AL()
+	{
+		setupGUI();
+	}
+    public static void main(String args[]) 
+    {
+    	Swing4AL swingListenerDemo = new Swing4AL();
+    	swingListenerDemo.showActionListeners();
+    }
+
+    private void setupGUI() throws IllegalArgumentException{
+        //CreateFrame
+        mainFrame = new JFrame("Chat Frame");
+        mainFrame.setPreferredSize(new Dimension(1000, 1000));
+        mainFrame.setLayout(new GridLayout(10, 10));
+        headerLabel = new JLabel("",SwingConstants.CENTER);
+        statusLabel = new JLabel("",SwingConstants.CENTER);
+        mainFrame.addWindowListener(new WindowAdapter() 
+        {
+           public void windowClosing(WindowEvent windowEvent)
+           {
+              System.exit(0);
+           }        
+        });    
+        //Create MenuBar and add components at the top
+        menuBar = new JMenuBar();
+        JMenu m1 = new JMenu("FILE");
+        JMenu m2 = new JMenu("Help");
+        JMenu m3 = new JMenu("Edit");
+        menuBar.add(m1);
+        menuBar.add(m2);
+        menuBar.add(m3);
+        //Creates Item per menu option
+        JMenuItem m11 = new JMenuItem("Open");
+        JMenuItem m22 = new JMenuItem("Save as");
+        JMenuItem m33 = new JMenuItem("Help Me");
+        m1.add(m11);
+        m1.add(m22);
+        m2.add(m33);
+
+        //Creating the panel at bottom and adding components
+         // the panel is not visible in output
+        textField = new JTextField(30); // accepts upto 30 characters
+ 
+        // Text Area at the Center
+        textArea = new JTextArea();
+
+        //Adding Components to the frame.
+        mainFrame.add(headerLabel);
+        mainFrame.add(statusLabel);
+        mainFrame.add(menuBar);
+        //mainFrame.add(controlPanel);
+       
+        mainFrame.add(textArea);
+        mainFrame.setVisible(true);
+    }
+    public void showActionListeners()
+    {
+    	headerLabel.setText("Enter Text");
+    	JPanel panel = new JPanel();
+    	JButton sendButton = new JButton("Send");
+    	
+    	sendButton.addActionListener(new CustomActionListeners());
+    	panel.add(sendButton);
+    	//controlPanel.add(panel);
+    	mainFrame.setVisible(true);
+    }
+    class CustomActionListeners implements ActionListener
+    {
+    	public void actionPerformed(ActionEvent e)
+    	{
+    		statusLabel.setText("Message Sent");
+    	}
+    }
+}
