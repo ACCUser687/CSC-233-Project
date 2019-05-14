@@ -33,31 +33,31 @@ public class JavaClient extends JFrame implements ActionListener, KeyListener,
     static Socket socket = null;
     static PrintWriter writer = null;
  
-    // // Graphics Variables
+    // Graphics Variables
     static JTextArea msgRec = new JTextArea(100, 50);
     static JTextArea msgSend = new JTextArea(100, 50);
     JButton send = new JButton("Send");
     JScrollPane pane2, pane1;
- 
+    // Create GUI for user.
     public JavaClient() {
         super("Client");
         setBounds(0, 0, 400, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
+        setResizable(false);//user cannot reset the size of the frame
         setLayout(null);
  
-        msgRec.setEditable(false);
+        msgRec.setEditable(false);//user cannot edit the incomming message
         msgRec.setBackground(Color.BLACK);
         msgRec.setForeground(Color.WHITE);
         msgRec.addFocusListener(this);
         msgRec.setText("");
  
-        msgRec.setWrapStyleWord(true);
+        msgRec.setWrapStyleWord(true);//set word and line wrap
         msgRec.setLineWrap(true);
  
-        pane2 = new JScrollPane(msgRec);
+        pane2 = new JScrollPane(msgRec); //create new pane and receive the "Enter Text Here" phrase
         pane2.setBounds(0, 0, 400, 200);
-        pane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        pane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); //grant scrollbar
         add(pane2);
  
         msgSend.setBackground(Color.LIGHT_GRAY);
@@ -65,11 +65,11 @@ public class JavaClient extends JFrame implements ActionListener, KeyListener,
         msgSend.setLineWrap(true);
         msgSend.setWrapStyleWord(true);
  
-        msgSend.setText("Enter Text Here");
+        msgSend.setText("Enter Text Here");//Place holder text
         msgSend.addFocusListener(this);
         msgSend.addKeyListener(this);
  
-        pane1 = new JScrollPane(msgSend);
+        pane1 = new JScrollPane(msgSend);//create pane and receive "Connected"
         pane1.setBounds(0, 200, 400, 200);
         pane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(pane1);
@@ -78,7 +78,7 @@ public class JavaClient extends JFrame implements ActionListener, KeyListener,
         add(send);
         send.addActionListener(this);
  
- 
+ //If the window closes the program stops, if the program stops the window closes
         addWindowFocusListener(new WindowFocusListener() {
             @Override
             public void windowGainedFocus(WindowEvent e) {
@@ -101,7 +101,7 @@ public class JavaClient extends JFrame implements ActionListener, KeyListener,
             }
  
         });
- 
+ //if the username exists, make it visable
         if ((userName) != null) {
             setVisible(true);
         } else {
@@ -113,8 +113,8 @@ public class JavaClient extends JFrame implements ActionListener, KeyListener,
     public static void main(String[] args) throws Exception {
         
  
-        userName = JOptionPane.showInputDialog("User Name (Client)");
-        iPAddress = JOptionPane.showInputDialog("Enter Server IpAddress");
+        userName = JOptionPane.showInputDialog("User Name (Client)");//pane to create username
+        iPAddress = JOptionPane.showInputDialog("Enter Server IpAddress");//pane to insert IP address
  
         // swing thread
         (new Thread(new Runnable() {
@@ -125,7 +125,7 @@ public class JavaClient extends JFrame implements ActionListener, KeyListener,
  
         })).start();
  
-        socket = new Socket(iPAddress, 8888);
+        socket = new Socket(iPAddress, 8888);//network socket
         msgRec.setText("Connected!");
  
         // listening port thread
@@ -199,7 +199,7 @@ public class JavaClient extends JFrame implements ActionListener, KeyListener,
     public void focusGained(FocusEvent e) {
  
         if (e.getSource() == msgRec) {
-            if (!(msgRec.getText().equals("") || msgRec.getText().equals(
+            if (!(msgRec.getText().equals("") || msgRec.getText().equals(//if the message received is blank or Connected send message userName is being read
                     "Connected!"))) {
  
                 writer.println("\t ***" + userName
@@ -222,7 +222,7 @@ public class JavaClient extends JFrame implements ActionListener, KeyListener,
     @Override
     public void focusLost(FocusEvent e) {
     }
- 
+ //send message
     private void sendMessage() {
         writer.println(userName + " :" + msgSend.getText());
  
@@ -231,7 +231,7 @@ public class JavaClient extends JFrame implements ActionListener, KeyListener,
         cursorUpdate();
  
         msgSend.setText("");
-        msgSend.setCaretPosition(0);
+        msgSend.setCaretPosition(0);//reset posistion of text caret
     }
  
     private static void cursorUpdate() {
