@@ -25,16 +25,16 @@ import javax.swing.text.DefaultCaret;
 public class JavaServer extends JFrame implements ActionListener, KeyListener,
         FocusListener {
  
-     Extra variables
+     //Extra variables
     static String message = ;
     static String userName = ;
  
-     Networking Variables
+    // Networking Variables
     static ServerSocket server = null;
     static Socket socket = null;
     static PrintWriter writer = null;
  
-      Graphics Variables
+     // Graphics Variables
     static JTextArea msgRec = new JTextArea(100, 50);
     static JTextArea msgSend = new JTextArea(100, 50);
     JButton send = new JButton(Send);
@@ -42,7 +42,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
  
    
     
- Create GUI for Server User
+// Create GUI for Server User
     public JavaServer() {
         super(Server);
         setBounds(0, 0, 400, 500);
@@ -50,16 +50,16 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
         setResizable(false);
         setLayout(null);
  
-        msgRec.setEditable(false);cannot edit messages received
+        msgRec.setEditable(false);//cannot edit messages received
         msgRec.setBackground(Color.BLACK);
         msgRec.setForeground(Color.WHITE);
         msgRec.addFocusListener(this);
         msgRec.setText();
  
-        msgRec.setWrapStyleWord(true);wordline wrap
+        msgRec.setWrapStyleWord(true);//wordline wrap
         msgRec.setLineWrap(true);
  
-        pane2 = new JScrollPane(msgRec);create pane2 for messages received
+        pane2 = new JScrollPane(msgRec);//create pane2 for messages received
         pane2.setBounds(0, 0, 400, 200);
         pane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(pane2);
@@ -73,7 +73,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
         msgSend.addFocusListener(this);
         msgSend.addKeyListener(this);
  
-        pane1 = new JScrollPane(msgSend);create pane1 for typing
+        pane1 = new JScrollPane(msgSend);//create pane1 for typing
         pane1.setBounds(0, 200, 400, 200);
         pane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(pane1);
@@ -123,7 +123,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
         
         userName = JOptionPane.showInputDialog(User Name (Server));
  
-         swing thread
+         //swing thread
         (new Thread(new Runnable() {
             public void run() {
                 new JavaServer();
@@ -131,13 +131,13 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
  
         })).start();
  
-        server = new ServerSocket(8888);network socket
+        server = new ServerSocket(8888);//network socket
         System.out.println(server.getInetAddress().getLocalHost());
          
         socket = server.accept();
  
         msgRec.setText(Connected!);
-         listening port thread
+         //listening port thread
         (new Thread(new Runnable() {
             public void run() {
  
@@ -151,7 +151,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
  
                         msgRec.append(n + line);
  
-                         Cursor Update
+                       //  Cursor Update
                         cursorUpdate();
                     }
  
@@ -181,7 +181,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
     }
     
  
-      KeyBoardEvents
+     // KeyBoardEvents
  
     @Override
     public void keyTyped(KeyEvent e) {
@@ -208,7 +208,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
         }
     }
  
-     FocusEvents
+   //  FocusEvents
     @Override
     public void focusGained(FocusEvent e) {
  
@@ -216,18 +216,18 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
             if (!(msgRec.getText().equals()  msgRec.getText().equals(
                     Connected!))) {
  
-                writer.println(t  + userName
-                        +  The Msg is being read......);
-                writer.flush();
+//                 writer.println(t  + userName
+//                         +  The Msg is being read......);
+//                 writer.flush();
             }
         } else if (e.getSource() == msgSend) {
              Set Mesg sending area clear
             if (msgSend.getText().equals(Write Message here)) {
                 msgSend.setText();
             } else {
-                writer.println(t  + userName
-                        +  The Msg is being typed......);
-                writer.flush();
+//                 writer.println(t  + userName
+//                         +  The Msg is being typed......);
+//                 writer.flush();
             }
  
         }
@@ -251,7 +251,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
     }
  
     private static void cursorUpdate() {
-         Update cursor position
+         //Update cursor position
         DefaultCaret caret = (DefaultCaret) msgRec.getCaret();
         caret.setDot(msgRec.getDocument().getLength());
  
