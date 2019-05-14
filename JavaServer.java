@@ -21,13 +21,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.text.DefaultCaret;
  
-@SuppressWarnings(serial)
+@SuppressWarnings("serial")
 public class JavaServer extends JFrame implements ActionListener, KeyListener,
         FocusListener {
  
      //Extra variables
-    static String message = ;
-    static String userName = ;
+    static String message = "";
+    static String userName = "";
  
     // Networking Variables
     static ServerSocket server = null;
@@ -37,14 +37,14 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
      // Graphics Variables
     static JTextArea msgRec = new JTextArea(100, 50);
     static JTextArea msgSend = new JTextArea(100, 50);
-    JButton send = new JButton(Send);
+    JButton send = new JButton("Send");
     JScrollPane pane2, pane1;
  
    
     
 // Create GUI for Server User
     public JavaServer() {
-        super(Server);
+        super("Server");
         setBounds(0, 0, 400, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -54,7 +54,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
         msgRec.setBackground(Color.BLACK);
         msgRec.setForeground(Color.WHITE);
         msgRec.addFocusListener(this);
-        msgRec.setText();
+        msgRec.setText("");
  
         msgRec.setWrapStyleWord(true);//wordline wrap
         msgRec.setLineWrap(true);
@@ -69,7 +69,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
         msgSend.setLineWrap(true);
         msgSend.setWrapStyleWord(true);
  
-        msgSend.setText(Enter Text Here);
+        msgSend.setText("Enter Text Here");
         msgSend.addFocusListener(this);
         msgSend.addKeyListener(this);
  
@@ -90,10 +90,10 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
             @Override
             public void windowGainedFocus(WindowEvent e) {
  
-                if (!msgRec.getText().equals()) {
+                if (!msgRec.getText().equals("")) {
                     System.out.println();
  
-                    writer.println(t&& + userName +  Focusing to Comunication&&);
+                    writer.println("t&&" + userName +  "Focusing to Comunication&&");
                     writer.flush();
  
                 }
@@ -102,8 +102,8 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
  
             @Override
             public void windowLostFocus(WindowEvent e) {
-                if (!msgRec.getText().equals()) {
-                    writer.println(t&& + userName +  Ignoring to Comunication&&);
+                if (!msgRec.getText().equals("")) {
+                    writer.println("t&&" + userName +  "Ignoring to Comunication&&");
                     writer.flush();
                 }
             }
@@ -121,7 +121,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
  
     public static void main(String[] args) throws Exception {
         
-        userName = JOptionPane.showInputDialog(User Name (Server));
+        userName = JOptionPane.showInputDialog("User Name (Server)");
  
          //swing thread
         (new Thread(new Runnable() {
@@ -136,7 +136,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
          
         socket = server.accept();
  
-        msgRec.setText(Connected!);
+        msgRec.setText("Connected!");
          //listening port thread
         (new Thread(new Runnable() {
             public void run() {
@@ -149,7 +149,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
                     boolean testFlag = true;
                     while ((line = reader.readLine()) != null) {
  
-                        msgRec.append(n + line);
+                        msgRec.append("\n" + line);
  
                        //  Cursor Update
                         cursorUpdate();
@@ -197,7 +197,7 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
     public void keyPressed(KeyEvent e) {
  
         if ((e.getKeyCode() == KeyEvent.VK_ENTER) && e.isShiftDown()) {
-            msgSend.append(n);
+            msgSend.append("\n");
  
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             sendMessage();
@@ -213,17 +213,17 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
     public void focusGained(FocusEvent e) {
  
         if (e.getSource() == msgRec) {
-            if (!(msgRec.getText().equals()  msgRec.getText().equals(
-                    Connected!))) {
+            if (!(msgRec.getText().equals("") || msgRec.getText().equals(
+                    "Connected!"))) {
  
 //                 writer.println(t  + userName
 //                         +  The Msg is being read......);
 //                 writer.flush();
             }
         } else if (e.getSource() == msgSend) {
-             Set Mesg sending area clear
-            if (msgSend.getText().equals(Write Message here)) {
-                msgSend.setText();
+             //Set Mesg sending area clear
+            if (msgSend.getText().equals("Write Message here")) {
+                msgSend.setText("");
             } else {
 //                 writer.println(t  + userName
 //                         +  The Msg is being typed......);
@@ -239,14 +239,14 @@ public class JavaServer extends JFrame implements ActionListener, KeyListener,
     }
  
     private void sendMessage() {
-        writer.println(userName +   + msgSend.getText());
+        writer.println(userName + " :"  + msgSend.getText());
         writer.flush();
  
-        msgRec.append(nMe  + msgSend.getText());
+        msgRec.append("\nMe"  + msgSend.getText());
  
         cursorUpdate();
  
-        msgSend.setText();
+        msgSend.setText("");
         msgSend.setCaretPosition(0);
     }
  
